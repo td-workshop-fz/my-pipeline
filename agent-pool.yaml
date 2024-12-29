@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    app: tf-agent
+  name: tf-agent-pool
+---
+apiVersion: app.terraform.io/v1alpha2
+kind: AgentPool
+metadata:
+  name: this
+  namespace: tf-agent-pool
+spec:
+  organization: tianguizheng
+  token:
+    secretKeyRef:
+      name: tfc-operator
+      key: token
+  name: agent-pool-1
+  agentTokens:
+    - name: white
+    - name: blue
+    - name: red
+  agentDeployment:
+    replicas: 3
+    spec:
+      containers:
+        - name: tfc-agent
+          image: "hashicorp/tfc-agent:latest"
