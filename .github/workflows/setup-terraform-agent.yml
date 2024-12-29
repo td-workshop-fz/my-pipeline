@@ -5,4 +5,9 @@ jobs:
   log-the-inputs:
     runs-on: arc-runner-set
     steps:
+      - uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBECONFIG }}
+        with:
+          args: get pods
       - run: kubectl apply -f agent-pool.yaml
